@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EFCoreGenericRepository
 {
@@ -48,9 +49,24 @@ namespace EFCoreGenericRepository
 
             Commit();
             return entity;
-
         }
+        public virtual async Task<TEntity> DeleteAsync(int id)
+        {
+            var entity = await DbSet.FindAsync(id);
+            if (entity == null)
+                return null;
 
+            if (entity is ISoftDeletable)
+            {
+                entity.LastUpdateTime = DateTime.Now;
+                (entity as ISoftDeletable).Deleted = true;
+            }
+            else
+                DbSet.Remove(entity);
+
+            await CommitAsync();
+            return entity;
+        }
         public virtual TEntity AddOrUpdate(TEntity entity)
         {
             if (entity == null)
@@ -60,6 +76,16 @@ namespace EFCoreGenericRepository
                 return Update(entity);
             else
                 return Insert(entity);
+        }
+        public virtual async Task<TEntity> AddOrUpdateAsync(TEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("Entity is null!");
+
+            if (entity.ID != 0)
+                return await UpdateAsync(entity);
+            else
+                return await InsertAsync(entity);
         }
 
         public virtual TEntity Insert(TEntity entity)
@@ -74,7 +100,18 @@ namespace EFCoreGenericRepository
 
             return entity;
         }
+        public virtual async Task<TEntity> InsertAsync(TEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("Entity is null!");
 
+            entity.CreationTime = DateTime.Now;
+
+            await DbSet.AddAsync(entity);
+            await CommitAsync();
+
+            return entity;
+        }
 
         public virtual TEntity Update(TEntity entity)
         {
@@ -101,11 +138,39 @@ namespace EFCoreGenericRepository
             Commit();
             return entity;
         }
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("Entity is null!");
 
+            entity.LastUpdateTime = DateTime.Now;
+            //if its ISoftUpdatable , get deep copy of entity and insert it as a soft deleted with FKPreviousVersionID=entity.ID 
+            if (typeof(ISoftUpdatable).IsAssignableFrom(typeof(TEntity)))
+            {
+                var dbResult = await DbSet.AsNoTracking().FirstOrDefaultAsync(x => x.ID == entity.ID);
+                if (dbResult == null)
+                    throw new ArgumentNullException($"There is no object in db whose ID is {entity.ID}. Check your object's ID");
+
+
+                dbResult.ID = 0;
+                (dbResult as ISoftUpdatable).FKPreviousVersionID = entity.ID;
+                (dbResult as ISoftUpdatable).Deleted = true;
+                (dbResult as ISoftUpdatable).LastUpdateTime = null;
+
+                return await InsertAsync(dbResult);
+            }
+
+            await CommitAsync();
+            return entity;
+        }
 
         protected virtual void Commit()
         {
             _context.SaveChanges();
+        }
+        protected virtual async Task CommitAsync()
+        {
+            await _context.SaveChangesAsync();
         }
         public virtual void Dispose()
         {
