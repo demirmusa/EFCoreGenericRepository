@@ -24,9 +24,9 @@ namespace EFCore.GenericRepository
                 return DbSet;
             else
             {
-                if (typeof(ISoftDeletable).IsAssignableFrom(typeof(TEntity)))
+                if (typeof(ISoftDeletableEntity).IsAssignableFrom(typeof(TEntity)))
                 {
-                    return ((IQueryable<ISoftDeletable>)(this.DbSet))
+                    return ((IQueryable<ISoftDeletableEntity>)(this.DbSet))
                         .Where(q => q.Deleted == false)
                         .Cast<TEntity>();
                 }
@@ -39,10 +39,10 @@ namespace EFCore.GenericRepository
             if (entity == null)
                 return null;
 
-            if (entity is ISoftDeletable)
+            if (entity is ISoftDeletableEntity)
             {
                 entity.LastUpdateTime = DateTime.Now;
-                (entity as ISoftDeletable).Deleted = true;
+                (entity as ISoftDeletableEntity).Deleted = true;
             }
             else
                 DbSet.Remove(entity);
@@ -56,10 +56,10 @@ namespace EFCore.GenericRepository
             if (entity == null)
                 return null;
 
-            if (entity is ISoftDeletable)
+            if (entity is ISoftDeletableEntity)
             {
                 entity.LastUpdateTime = DateTime.Now;
-                (entity as ISoftDeletable).Deleted = true;
+                (entity as ISoftDeletableEntity).Deleted = true;
             }
             else
                 DbSet.Remove(entity);
@@ -120,7 +120,7 @@ namespace EFCore.GenericRepository
 
             entity.LastUpdateTime = DateTime.Now;
             //if its ISoftUpdatable , get deep copy of entity and insert it as a soft deleted with FKPreviousVersionID=entity.ID 
-            if (typeof(ISoftUpdatable).IsAssignableFrom(typeof(TEntity)))
+            if (typeof(ISoftUpdatableEntity).IsAssignableFrom(typeof(TEntity)))
             {
                 var dbResult = DbSet.AsNoTracking().FirstOrDefault(x => x.ID == entity.ID);
                 if (dbResult == null)
@@ -128,9 +128,9 @@ namespace EFCore.GenericRepository
 
 
                 dbResult.ID = 0;
-                (dbResult as ISoftUpdatable).FKPreviousVersionID = entity.ID;
-                (dbResult as ISoftUpdatable).Deleted = true;
-                (dbResult as ISoftUpdatable).LastUpdateTime = null;
+                (dbResult as ISoftUpdatableEntity).FKPreviousVersionID = entity.ID;
+                (dbResult as ISoftUpdatableEntity).Deleted = true;
+                (dbResult as ISoftUpdatableEntity).LastUpdateTime = null;
 
                 return Insert(dbResult);
             }
@@ -145,7 +145,7 @@ namespace EFCore.GenericRepository
 
             entity.LastUpdateTime = DateTime.Now;
             //if its ISoftUpdatable , get deep copy of entity and insert it as a soft deleted with FKPreviousVersionID=entity.ID 
-            if (typeof(ISoftUpdatable).IsAssignableFrom(typeof(TEntity)))
+            if (typeof(ISoftUpdatableEntity).IsAssignableFrom(typeof(TEntity)))
             {
                 var dbResult = await DbSet.AsNoTracking().FirstOrDefaultAsync(x => x.ID == entity.ID);
                 if (dbResult == null)
@@ -153,9 +153,9 @@ namespace EFCore.GenericRepository
 
 
                 dbResult.ID = 0;
-                (dbResult as ISoftUpdatable).FKPreviousVersionID = entity.ID;
-                (dbResult as ISoftUpdatable).Deleted = true;
-                (dbResult as ISoftUpdatable).LastUpdateTime = null;
+                (dbResult as ISoftUpdatableEntity).FKPreviousVersionID = entity.ID;
+                (dbResult as ISoftUpdatableEntity).Deleted = true;
+                (dbResult as ISoftUpdatableEntity).LastUpdateTime = null;
 
                 return await InsertAsync(dbResult);
             }

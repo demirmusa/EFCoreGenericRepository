@@ -6,9 +6,9 @@
     <Authors>demirmusa</Authors>
     <Company />
     <Description>Generic efcore repository which manages your entities. It allows you sing your entities as a ISoftDeletable , ISoftUpdatable.</Description>
-    <Copyright>MIT</Copyright>
-    <PackageLicenseUrl>https://github.com/demirmusa/EventManagementMiddleware/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/demirmusa/EventManagementMiddleware</PackageProjectUrl>
+    <Copyright></Copyright>
+    <PackageLicenseUrl>https://github.com/demirmusa/EFCoreGenericRepository/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/demirmusa/EFCoreGenericRepository</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

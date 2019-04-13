@@ -15,7 +15,7 @@ namespace EFCore.GenericRepository
     /// <summary>
     /// when entity deleted. ERepository sign it as a deleted and update.
     /// </summary>
-    public class SoftDeletableDbEntity : BaseDbEntity, ISoftDeletable
+    public class SoftDeletableDbEntity : BaseDbEntity, ISoftDeletableEntity
     {
         public bool Deleted { get; set; }
     }
@@ -24,7 +24,7 @@ namespace EFCore.GenericRepository
     /// when entity updated. ERepository soft deletes it and create brand new copy of it with FKPreviousVersionID.
     /// </summary>
     [Serializable]
-    public class SoftUpdatableDbEntity : SoftDeletableDbEntity, ISoftUpdatable
+    public class SoftUpdatableDbEntity : SoftDeletableDbEntity, ISoftUpdatableEntity
     {
         public int? FKPreviousVersionID { get; set; }
     }

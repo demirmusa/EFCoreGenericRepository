@@ -3,7 +3,7 @@
 
 namespace EFCore.GenericRepository.interfaces
 {
-    internal interface ISoftUpdatable : ISoftDeletable
+    internal interface ISoftUpdatableEntity : ISoftDeletableEntity
     {
         int? FKPreviousVersionID { get; set; }
     }

@@ -2,7 +2,7 @@
 
 namespace EFCore.GenericRepository.interfaces
 {
-    internal interface ISoftDeletable: IBaseDbEntity
+    internal interface ISoftDeletableEntity: IBaseDbEntity
     {
         bool Deleted { get; set; }
     }
