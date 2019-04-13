@@ -1,6 +1,6 @@
-﻿using EFCoreGenericRepository.interfaces;
+﻿using EFCore.GenericRepository.interfaces;
 using Microsoft.Extensions.DependencyInjection;
-namespace EFCoreGenericRepository
+namespace EFCore.GenericRepository
 {
     public static class EFCoreSharedDIExtensions
     {

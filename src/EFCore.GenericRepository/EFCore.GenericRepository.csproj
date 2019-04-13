@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>demirmusa</Authors>
+    <Company />
+    <Description>Generic efcore repository which manages your entities. It allows you sing your entities as a ISoftDeletable , ISoftUpdatable.</Description>
+    <Copyright>MIT</Copyright>
+    <PackageLicenseUrl>https://github.com/demirmusa/EventManagementMiddleware/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/demirmusa/EventManagementMiddleware</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.3" />
+  </ItemGroup>
+
+</Project>

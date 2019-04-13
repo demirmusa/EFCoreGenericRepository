@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace EFCoreGenericRepository.interfaces
+namespace EFCore.GenericRepository.interfaces
 {
     internal interface IBaseDbEntity
     {

@@ -1,10 +1,10 @@
-﻿using EFCoreGenericRepository.interfaces;
+﻿using EFCore.GenericRepository.interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EFCoreGenericRepository
+namespace EFCore.GenericRepository
 {
     public class GenericRepository<TContext, TEntity> : IGenericRepository<TContext, TEntity>, IDisposable
         where TContext : DbContext

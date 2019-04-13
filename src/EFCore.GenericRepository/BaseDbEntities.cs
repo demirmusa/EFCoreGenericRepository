@@ -1,8 +1,8 @@
-﻿using EFCoreGenericRepository.interfaces;
+﻿using EFCore.GenericRepository.interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace EFCoreGenericRepository
+namespace EFCore.GenericRepository
 {
     public class BaseDbEntity : IBaseDbEntity
     {

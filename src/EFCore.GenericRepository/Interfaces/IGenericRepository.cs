@@ -4,7 +4,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace EFCoreGenericRepository.interfaces
+namespace EFCore.GenericRepository.interfaces
 {
     public interface IGenericRepository<TContext, TEntity>
         where TContext : DbContext
