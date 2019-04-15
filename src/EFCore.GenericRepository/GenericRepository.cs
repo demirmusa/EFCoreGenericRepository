@@ -151,7 +151,6 @@ namespace EFCore.GenericRepository
                 if (dbResult == null)
                     throw new ArgumentNullException($"There is no object in db whose ID is {entity.ID}. Check your object's ID");
 
-
                 dbResult.ID = 0;
                 (dbResult as ISoftUpdatableEntity).FKPreviousVersionID = entity.ID;
                 (dbResult as ISoftUpdatableEntity).Deleted = true;
@@ -159,7 +158,6 @@ namespace EFCore.GenericRepository
 
                 return await InsertAsync(dbResult);
             }
-
             await CommitAsync();
             return entity;
         }
