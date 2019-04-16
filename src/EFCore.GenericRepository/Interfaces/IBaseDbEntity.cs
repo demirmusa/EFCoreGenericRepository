@@ -2,7 +2,7 @@
 
 namespace EFCore.GenericRepository.interfaces
 {
-    internal interface IBaseDbEntity
+    public interface IBaseDbEntity
     {
         int ID { get; set; }
         DateTime CreationTime { get; set; }

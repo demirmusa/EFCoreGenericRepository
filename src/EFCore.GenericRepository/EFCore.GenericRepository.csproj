@@ -10,8 +10,8 @@
     <PackageLicenseUrl>https://github.com/demirmusa/EFCoreGenericRepository/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/demirmusa/EFCoreGenericRepository</PackageProjectUrl>
     <PackageTags>efcore, generic repository, entity framework core</PackageTags>
-<Version>1.0.4</Version>
-<PackageReleaseNotes>Delete, DeleteAsync by entity added.</PackageReleaseNotes>
+<Version>1.0.5</Version>
+<PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

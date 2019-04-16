@@ -9,12 +9,12 @@ namespace EFCore.GenericRepository.interfaces
 {
     public interface IGenericRepository<TContext, TEntity>
         where TContext : DbContext
-        where TEntity : BaseDbEntity
+        where TEntity : class, IBaseDbEntity
     {
         TEntity Find(int id);
         Task<TEntity> FindAsync(int id);
 
-        IQueryable<TEntity> AsQueryable(bool getDeleted = false);      
+        IQueryable<TEntity> AsQueryable(bool getDeleted = false);
 
         TEntity AddOrUpdate(TEntity entity);
         Task<TEntity> AddOrUpdateAsync(TEntity entity);

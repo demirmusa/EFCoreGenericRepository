@@ -8,7 +8,7 @@ namespace EFCore.GenericRepository
 {
     public class GenericRepository<TContext, TEntity> : IGenericRepository<TContext, TEntity>, IDisposable
         where TContext : DbContext
-        where TEntity : BaseDbEntity
+        where TEntity : class, IBaseDbEntity
     {
         TContext _context;
         protected DbSet<TEntity> DbSet;
@@ -41,7 +41,7 @@ namespace EFCore.GenericRepository
                 return DbSet;
             }
         }
-     
+
         public virtual TEntity AddOrUpdate(TEntity entity)
         {
             if (entity == null)
