@@ -11,6 +11,8 @@ namespace EFCore.GenericRepository.interfaces
         where TContext : DbContext
         where TEntity : BaseDbEntity
     {
+        TEntity Find(int id);
+        Task<TEntity> FindAsync(int id);
         IQueryable<TEntity> AsQueryable(bool getDeleted = false);
 
         TEntity Delete(int id);

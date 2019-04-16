@@ -18,6 +18,14 @@ namespace EFCore.GenericRepository
             _context = context;
             DbSet = _context.Set<TEntity>();
         }
+        public virtual TEntity Find(int id)
+        {
+            return DbSet.Find(id);
+        }
+        public virtual async Task<TEntity> FindAsync(int id)
+        {
+            return await DbSet.FindAsync(id);
+        }
         public virtual IQueryable<TEntity> AsQueryable(bool getDeleted = false)
         {
             if (getDeleted)
