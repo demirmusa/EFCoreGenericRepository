@@ -41,40 +41,7 @@ namespace EFCore.GenericRepository
                 return DbSet;
             }
         }
-        public virtual TEntity Delete(int id)
-        {
-            var entity = DbSet.Find(id);
-            if (entity == null)
-                return null;
-
-            if (entity is ISoftDeletableEntity)
-            {
-                entity.LastUpdateTime = DateTime.Now;
-                (entity as ISoftDeletableEntity).Deleted = true;
-            }
-            else
-                DbSet.Remove(entity);
-
-            Commit();
-            return entity;
-        }
-        public virtual async Task<TEntity> DeleteAsync(int id)
-        {
-            var entity = await DbSet.FindAsync(id);
-            if (entity == null)
-                return null;
-
-            if (entity is ISoftDeletableEntity)
-            {
-                entity.LastUpdateTime = DateTime.Now;
-                (entity as ISoftDeletableEntity).Deleted = true;
-            }
-            else
-                DbSet.Remove(entity);
-
-            await CommitAsync();
-            return entity;
-        }
+     
         public virtual TEntity AddOrUpdate(TEntity entity)
         {
             if (entity == null)
@@ -140,7 +107,8 @@ namespace EFCore.GenericRepository
                 (dbResult as ISoftUpdatableEntity).Deleted = true;
                 (dbResult as ISoftUpdatableEntity).LastUpdateTime = null;
 
-                return Insert(dbResult);
+                Insert(dbResult);
+                return entity;
             }
 
             Commit();
@@ -164,12 +132,78 @@ namespace EFCore.GenericRepository
                 (dbResult as ISoftUpdatableEntity).Deleted = true;
                 (dbResult as ISoftUpdatableEntity).LastUpdateTime = null;
 
-                return await InsertAsync(dbResult);
+                await InsertAsync(dbResult);
+                return entity;
             }
             await CommitAsync();
             return entity;
         }
+        public virtual TEntity Delete(TEntity entity)
+        {
+            if (entity == null)
+                return null;
 
+            if (entity is ISoftDeletableEntity)
+            {
+                entity.LastUpdateTime = DateTime.Now;
+                (entity as ISoftDeletableEntity).Deleted = true;
+            }
+            else
+                DbSet.Remove(entity);
+
+            Commit();
+            return entity;
+        }
+        public virtual async Task<TEntity> DeleteAsync(TEntity entity)
+        {
+            if (entity == null)
+                return null;
+
+            if (entity is ISoftDeletableEntity)
+            {
+                entity.LastUpdateTime = DateTime.Now;
+                (entity as ISoftDeletableEntity).Deleted = true;
+            }
+            else
+                DbSet.Remove(entity);
+
+            await CommitAsync();
+            return entity;
+        }
+        public virtual TEntity Delete(int id)
+        {
+            var entity = DbSet.Find(id);
+            if (entity == null)
+                return null;
+
+            if (entity is ISoftDeletableEntity)
+            {
+                entity.LastUpdateTime = DateTime.Now;
+                (entity as ISoftDeletableEntity).Deleted = true;
+            }
+            else
+                DbSet.Remove(entity);
+
+            Commit();
+            return entity;
+        }
+        public virtual async Task<TEntity> DeleteAsync(int id)
+        {
+            var entity = await DbSet.FindAsync(id);
+            if (entity == null)
+                return null;
+
+            if (entity is ISoftDeletableEntity)
+            {
+                entity.LastUpdateTime = DateTime.Now;
+                (entity as ISoftDeletableEntity).Deleted = true;
+            }
+            else
+                DbSet.Remove(entity);
+
+            await CommitAsync();
+            return entity;
+        }
         protected virtual void Commit()
         {
             _context.SaveChanges();

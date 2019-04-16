@@ -13,10 +13,8 @@ namespace EFCore.GenericRepository.interfaces
     {
         TEntity Find(int id);
         Task<TEntity> FindAsync(int id);
-        IQueryable<TEntity> AsQueryable(bool getDeleted = false);
 
-        TEntity Delete(int id);
-        Task<TEntity> DeleteAsync(int id);
+        IQueryable<TEntity> AsQueryable(bool getDeleted = false);      
 
         TEntity AddOrUpdate(TEntity entity);
         Task<TEntity> AddOrUpdateAsync(TEntity entity);
@@ -26,5 +24,14 @@ namespace EFCore.GenericRepository.interfaces
 
         TEntity Update(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
+
+        TEntity Delete(int id);
+        Task<TEntity> DeleteAsync(int id);
+
+        TEntity Delete(TEntity entity);
+        Task<TEntity> DeleteAsync(TEntity entity);
+
+
+
     }
 }
