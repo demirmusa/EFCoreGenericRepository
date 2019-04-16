@@ -26,6 +26,7 @@ public class ExampleDbContext : DbContext
     public DbSet<Person> People { get; set; }
     public DbSet<User> Usesr { get; set; }
     public DbSet<UserPhone> UserPhones { get; set; }
+    ...
 }
 ````
 #### Implementation Option 1 ####
