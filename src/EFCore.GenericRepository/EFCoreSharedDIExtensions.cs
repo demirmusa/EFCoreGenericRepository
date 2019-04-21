@@ -4,23 +4,23 @@ namespace EFCore.GenericRepository
 {
     public static class EFCoreSharedDIExtensions
     {
-        public static IServiceCollection AddGenericRepositoryScoped(this IServiceCollection collection)
-        {
-            collection.AddScoped(typeof(IGenericRepository<,>),
+        public static IServiceCollection AddGenericRepositoryScoped(this IServiceCollection services)
+        {            
+            services.AddScoped(typeof(IGenericRepository<,>),
                 typeof(GenericRepository<,>));
-            return collection;
+            return services;
         }
-        public static IServiceCollection AddGenericRepositoryTransient(this IServiceCollection collection)
+        public static IServiceCollection AddGenericRepositoryTransient(this IServiceCollection services)
         {
-            collection.AddTransient(typeof(IGenericRepository<,>),
+            services.AddTransient(typeof(IGenericRepository<,>),
                 typeof(GenericRepository<,>));
-            return collection;
+            return services;
         }
-        public static IServiceCollection AddGenericRepositorySingleton(this IServiceCollection collection)
+        public static IServiceCollection AddGenericRepositorySingleton(this IServiceCollection services)
         {
-            collection.AddSingleton(typeof(IGenericRepository<,>),
+            services.AddSingleton(typeof(IGenericRepository<,>),
                 typeof(GenericRepository<,>));
-            return collection;
+            return services;
         }
     }
 }
