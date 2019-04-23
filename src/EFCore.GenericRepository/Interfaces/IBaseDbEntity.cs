@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EFCore.GenericRepository.interfaces
+namespace EFCore.GenericRepository.Interfaces
 {
     public interface IBaseDbEntity
     {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EFCore.GenericRepository.interfaces;
+using EFCore.GenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EFCore.GenericRepository.GenericServices
 {
-    public class GenericAsyncService<TContext, TEntity>
+    public abstract class GenericAsyncService<TContext, TEntity>
         where TContext : DbContext
         where TEntity : class, IBaseDbEntity
     {

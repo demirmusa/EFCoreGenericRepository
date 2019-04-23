@@ -1,6 +1,6 @@
 ﻿
 
-namespace EFCore.GenericRepository.interfaces
+namespace EFCore.GenericRepository.Interfaces
 {
     public interface ISoftDeletableEntity: IBaseDbEntity
     {

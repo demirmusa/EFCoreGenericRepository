@@ -1,4 +1,4 @@
-﻿using EFCore.GenericRepository.interfaces;
+﻿using EFCore.GenericRepository.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 namespace EFCore.GenericRepository
 {

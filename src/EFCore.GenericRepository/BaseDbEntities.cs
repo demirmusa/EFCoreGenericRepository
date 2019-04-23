@@ -1,4 +1,4 @@
-﻿using EFCore.GenericRepository.interfaces;
+﻿using EFCore.GenericRepository.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
 

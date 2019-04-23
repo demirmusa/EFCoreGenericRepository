@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EFCore.GenericRepository.interfaces;
+using EFCore.GenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,13 +15,13 @@ namespace EFCore.GenericRepository.GenericServices
     /// <typeparam name="TContext"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TEntityDto">input and output dto, it will map to Tentity</typeparam>
-    public class GenericAsyncService<TContext, TEntity, TEntityDto>
+    public abstract class GenericAsyncService<TContext, TEntity, TEntityDto>
           where TContext : DbContext
           where TEntity : class, IBaseDbEntity
           where TEntityDto : class
     {
         protected readonly IGenericRepository<TContext, TEntity> _genericRepo;
-        private readonly IMapper _mapper;
+        protected readonly IMapper _mapper;
 
         public GenericAsyncService(IGenericRepository<TContext, TEntity> genericRepo, IMapper mapper)
         {

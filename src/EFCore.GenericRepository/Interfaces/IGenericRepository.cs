@@ -2,19 +2,22 @@
 
 
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace EFCore.GenericRepository.interfaces
+namespace EFCore.GenericRepository.Interfaces
 {
     public interface IGenericRepository<TContext, TEntity>
         where TContext : DbContext
         where TEntity : class, IBaseDbEntity
     {
+        IQueryable<TEntity> AsQueryable(bool getDeleted = false);
+
         TEntity Find(int id);
         Task<TEntity> FindAsync(int id);
-
-        IQueryable<TEntity> AsQueryable(bool getDeleted = false);
 
         TEntity AddOrUpdate(TEntity entity);
         Task<TEntity> AddOrUpdateAsync(TEntity entity);
@@ -30,6 +33,16 @@ namespace EFCore.GenericRepository.interfaces
 
         TEntity Delete(TEntity entity);
         Task<TEntity> DeleteAsync(TEntity entity);
+
+        IEnumerable<TEntity> Delete(IEnumerable<TEntity> entities);
+        Task<IEnumerable<TEntity>> DeleteAsync(IEnumerable<TEntity> entities);
+
+        IEnumerable<TEntity> Delete(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
+
+
+        bool Any(Expression<Func<TEntity, bool>> predicate);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
 
 
 

@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.GenericRepository", "EFCore.GenericRepository\EFCore.GenericRepository.csproj", "{2B445A79-F373-4058-B665-0C9E2A22C669}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{3831D9C4-49BF-4CE7-A8FB-BE7F4CE4C755}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericRepositoryUnitTests", "..\test\GenericRepositoryUnitTests\GenericRepositoryUnitTests.csproj", "{51638DD0-C86D-470E-B88D-1CEA4C0991AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{2B445A79-F373-4058-B665-0C9E2A22C669}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B445A79-F373-4058-B665-0C9E2A22C669}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B445A79-F373-4058-B665-0C9E2A22C669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51638DD0-C86D-470E-B88D-1CEA4C0991AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51638DD0-C86D-470E-B88D-1CEA4C0991AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51638DD0-C86D-470E-B88D-1CEA4C0991AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51638DD0-C86D-470E-B88D-1CEA4C0991AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{51638DD0-C86D-470E-B88D-1CEA4C0991AF} = {3831D9C4-49BF-4CE7-A8FB-BE7F4CE4C755}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED8068F8-FF62-4A48-B2A7-09A9B177F410}
