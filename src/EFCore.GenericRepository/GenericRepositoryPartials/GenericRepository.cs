@@ -1,10 +1,7 @@
 ﻿using EFCore.GenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace EFCore.GenericRepository
 {
@@ -12,15 +9,15 @@ namespace EFCore.GenericRepository
         where TContext : DbContext
         where TEntity : class, IBaseDbEntity
     {
-        TContext _context;
-        protected DbSet<TEntity> DbSet;
+        private TContext _context;
+        private DbSet<TEntity> _dbSet;
         protected bool IsSoftDeletableEntity { get; }
         protected bool IsSoftUpdatableEntity { get; }
 
         public GenericRepository(TContext context)
         {
             _context = context;
-            DbSet = _context.Set<TEntity>();
+            _dbSet = _context.Set<TEntity>();
 
             IsSoftDeletableEntity = typeof(ISoftDeletableEntity).IsAssignableFrom(typeof(TEntity));
             IsSoftUpdatableEntity = typeof(ISoftUpdatableEntity).IsAssignableFrom(typeof(TEntity));
@@ -28,19 +25,19 @@ namespace EFCore.GenericRepository
         public virtual IQueryable<TEntity> AsQueryable(bool getDeleted = false)
         {
             if (getDeleted)
-                return DbSet;
+                return _dbSet;
             else
             {
                 if (IsSoftDeletableEntity)
                 {
-                    return ((IQueryable<ISoftDeletableEntity>)(this.DbSet))
+                    return ((IQueryable<ISoftDeletableEntity>)(this._dbSet))
                         .Where(q => q.Deleted == false)
                         .Cast<TEntity>();
                 }
-                return DbSet;
+                return _dbSet;
             }
         }
-  
+
         public virtual void Dispose()
         {
             _context.Dispose();

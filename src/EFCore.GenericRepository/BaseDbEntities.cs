@@ -23,7 +23,6 @@ namespace EFCore.GenericRepository
     /// <summary>
     /// when entity updated. ERepository soft deletes it and create brand new copy of it with FKPreviousVersionID.
     /// </summary>
-    [Serializable]
     public class SoftUpdatableDbEntity : SoftDeletableDbEntity, ISoftUpdatableEntity
     {
         public int? FKPreviousVersionID { get; set; }

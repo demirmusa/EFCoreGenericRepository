@@ -5,7 +5,7 @@ namespace EFCore.GenericRepository
     public static class EFCoreSharedDIExtensions
     {
         public static IServiceCollection AddGenericRepositoryScoped(this IServiceCollection services)
-        {            
+        {
             services.AddScoped(typeof(IGenericRepository<,>),
                 typeof(GenericRepository<,>));
             return services;

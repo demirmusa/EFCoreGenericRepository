@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace EFCore.GenericRepository
 {
@@ -13,7 +12,7 @@ namespace EFCore.GenericRepository
     {
         public virtual TEntity Find(int id)
         {
-            return DbSet.Find(id);
+            return _dbSet.Find(id);
         }
         /// <summary>
         ///  Determines whether any element of a sequence satisfies a condition.
@@ -42,7 +41,7 @@ namespace EFCore.GenericRepository
 
             entity.CreationTime = DateTime.Now;
 
-            DbSet.Add(entity);
+            _dbSet.Add(entity);
             Commit();
 
             return entity;
@@ -53,10 +52,10 @@ namespace EFCore.GenericRepository
                 throw new ArgumentNullException("Entity is null!");
 
             entity.LastUpdateTime = DateTime.Now;
-            //if its ISoftUpdatable , get deep copy of entity and insert it as a soft deleted with FKPreviousVersionID=entity.ID 
+            //if its ISoftUpdatable , get copy of entity and insert it as a soft deleted with FKPreviousVersionID=entity.ID 
             if (IsSoftUpdatableEntity)
             {
-                var dbResult = DbSet.AsNoTracking().FirstOrDefault(x => x.ID == entity.ID);
+                var dbResult = _dbSet.AsNoTracking().FirstOrDefault(x => x.ID == entity.ID);
                 if (dbResult == null)
                     throw new ArgumentNullException($"There is no object in db whose ID is {entity.ID}. Check your object's ID");
 
@@ -84,14 +83,14 @@ namespace EFCore.GenericRepository
                 (entity as ISoftDeletableEntity).Deleted = true;
             }
             else
-                DbSet.Remove(entity);
+                _dbSet.Remove(entity);
 
             Commit();
             return entity;
         }
         public virtual TEntity Delete(int id)
         {
-            var entity = DbSet.Find(id);
+            var entity = _dbSet.Find(id);
             if (entity == null)
                 return null;
 
@@ -101,7 +100,7 @@ namespace EFCore.GenericRepository
                 (entity as ISoftDeletableEntity).Deleted = true;
             }
             else
-                DbSet.Remove(entity);
+                _dbSet.Remove(entity);
 
             Commit();
             return entity;
@@ -120,7 +119,7 @@ namespace EFCore.GenericRepository
                 }
             }
             else// if they are not,  remove them
-                DbSet.RemoveRange(entities);
+                _dbSet.RemoveRange(entities);
 
             Commit();
             return entities;
@@ -141,7 +140,7 @@ namespace EFCore.GenericRepository
                 }
             }
             else// if they are not,  remove them
-                DbSet.RemoveRange(entities);
+                _dbSet.RemoveRange(entities);
 
             Commit();
             return entities;
