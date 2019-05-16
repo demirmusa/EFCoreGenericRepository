@@ -52,6 +52,11 @@ namespace EFCore.GenericRepository
                 throw new ArgumentNullException("Entity is null!");
 
             entity.LastUpdateTime = DateTime.Now;
+            var dbEntity =  _dbSet.FirstOrDefault(x => x.ID == entity.ID);
+            if (dbEntity == null)
+                throw new ArgumentNullException($"There is no object in db whose ID is {entity.ID}. Check your object's ID");
+
+            CopyAllTo(entity, dbEntity);
             //if its ISoftUpdatable , get copy of entity and insert it as a soft deleted with FKPreviousVersionID=entity.ID 
             if (IsSoftUpdatableEntity)
             {

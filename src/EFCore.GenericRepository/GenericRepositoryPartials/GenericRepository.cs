@@ -37,7 +37,16 @@ namespace EFCore.GenericRepository
                 return _dbSet;
             }
         }
-
+        ///
+        public void CopyAllTo<T>(T source, T target)
+        {
+            var type = typeof(T);
+            foreach (var sourceProperty in type.GetProperties())
+            {
+                var targetProperty = type.GetProperty(sourceProperty.Name);
+                targetProperty.SetValue(target, sourceProperty.GetValue(source, null), null);
+            }
+        }
         public virtual void Dispose()
         {
             _context.Dispose();
