@@ -86,6 +86,19 @@ namespace GenericRepositoryUnitTests
                 Assert.Fail();
 
             Assert.Pass();
-        }      
+        }
+        [Test]
+        public async Task UpdateTest()
+        {
+            int id = InitializedEntities.FirstOrDefault();
+            var findResult = await _personSoftUpdatableRepo.FindAsync(id);
+
+            findResult.Name = "updateTest2";
+            await _personSoftUpdatableRepo.UpdateAsync(findResult);
+
+            findResult = await _personSoftUpdatableRepo.FindAsync(id);
+
+            Assert.AreEqual(findResult.Name, "updateTest2");
+        }
     }
 }

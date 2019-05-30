@@ -1,3 +1,4 @@
+using System;
 using EFCore.GenericRepository;
 using GenericRepositoryUnitTests.Data;
 using GenericRepositoryUnitTests.Data.DbEntities;
@@ -9,11 +10,13 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using AutoMapper;
 
 namespace GenericRepositoryUnitTests
 {
     public abstract class BaseTestClass
     {
+        protected TestGenericAsyncServiceWithDto _testGenericAsyncService;
         protected IGenericRepository<UnitTestDbContext, Person_SoftUpdatableDbEntity> _personSoftUpdatableRepo;
         [SetUp]
         public async Task Setup()
@@ -23,12 +26,16 @@ namespace GenericRepositoryUnitTests
             services.AddDbContext<UnitTestDbContext>(options =>
              options.UseSqlServer("Data Source=LAPTOP-3O58F4FN;database=efcoregenericrepobasictestdb;trusted_connection=yes;"));
 
-
+            services.AddSingleton<TestGenericAsyncServiceWithDto>();
             services.AddGenericRepositoryScoped();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             var provider = services.BuildServiceProvider();
 
 
             _personSoftUpdatableRepo = provider.GetRequiredService<IGenericRepository<UnitTestDbContext, Person_SoftUpdatableDbEntity>>();
+            _testGenericAsyncService = provider.GetRequiredService<TestGenericAsyncServiceWithDto>();
             await Initialize();
         }
         public string GetString<T>(T obj) => JsonConvert.SerializeObject(obj);
