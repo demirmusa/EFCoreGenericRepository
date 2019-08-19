@@ -24,7 +24,7 @@ public class User : SoftUpdatableDbEntity //when you update entity repo will cre
 public class ExampleDbContext : DbContext
 {
     public DbSet<Person> People { get; set; }
-    public DbSet<User> Usesr { get; set; }
+    public DbSet<User> User { get; set; }
     public DbSet<UserPhone> UserPhones { get; set; }
     ...
 }
