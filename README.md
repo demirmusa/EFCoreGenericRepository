@@ -3,7 +3,7 @@ Generic entity framework sql server repository which manages your entities. It a
 
 ## Usage ##
 Create entity and context
-````
+```csharp
 public class UserPhone :BaseDbEntity
 {
     public string PhoneNumber{get;set;}
@@ -32,17 +32,17 @@ public class ExampleDbContext : DbContext
 #### Implementation Option 1 ####
 
 Add generic repository to your dependency injection service with one of these extensions
-````
+```csharp
 ...
 services.AddGenericRepositoryScoped();
 services.AddGenericRepositoryTransient();
 services.AddGenericRepositorySingleton();
 ...
-````
+```
 
 Then just call generic repo 
 
-````    
+```csharp 
 ...
 IGenericRepository<ExampleDbContext, Person> _personRepo;
 public PeopleService(IGenericRepository<ExampleDbContext, Person> personRepo)
@@ -65,11 +65,11 @@ public Person UpdatePerson(Person person)
 }
 ...
         
-````
+```
 #### Implementation Option 2 ####
  Create generic repos by context
  
- ````
+ ```csharp
 public interface IExampleDbContextGenericRepository<TEntity> : IGenericRepository<ExampleDbContext, TEntity>
     where TEntity : IBaseDbEntity
 {
@@ -82,17 +82,18 @@ public class ExampleDbContextGenericRepository<TEntity> : GenericRepository<Exam
     {
     }
 }
- ````
+ ```
  
 Inject your custom generic repos to dependency injection service collection
- ````
+
+```csharp
 ...
 services.AddScoped(typeof(IExampleDbContextGenericRepository<>), typeof(ExampleDbContextGenericRepository<>));  
 ...
- ````
+```
 
 Then just call your custom generic repo 
-````    
+```csharp    
 ...
 IExampleDbContextGenericRepository<Person> _personRepo;
 public PeopleService(IExampleDbContextGenericRepository<Person> personRepo)
@@ -112,7 +113,7 @@ public async Task<Person> UpdatePerson(Person person)
 }
 ...
         
-````
+```
 
 
 
